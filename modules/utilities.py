@@ -4,6 +4,9 @@ import toml
 import numpy as np
 import pandas as pd
 
+import tkinter as tk
+from tkinter import messagebox
+
 config_path = "config.toml"  # Specify the path to your TOML configuration file
 
 # Load the configuration from the TOML file
@@ -155,29 +158,133 @@ def get_reg_no_data(df, excel_file, file_course_code):
     elif reg_no_cell is None:
         files_without_reg_no.append(excel_file)
     elif internal_marks_cell is None:
-        print("Maybe 'INTERNAL EXAMINER MARKS /100' cell is missing in {}.".format(excel_file))
+        log_print("Maybe 'INTERNAL EXAMINER MARKS /100' cell is missing in {}.".format(excel_file))
 
     # Check for mixed courses in each Excel file
     for excel_file, courses in course_files.items():
         if len(courses) > 1:
-            print(f"Warning: Excel file '{excel_file}' contains data from multiple courses: {', '.join(courses)}.")
+            log_print(f"Warning: Excel file '{excel_file}' contains data from multiple courses: {', '.join(courses)}.")
 
     # print(course_code_data)
 
 
+
+# Define a function to normalize registration numbers
+def normalize_reg_no(reg_no_to_normalize):
+    # Replace O with 0 and remove spaces
+    normalized_reg_no = reg_no_to_normalize.replace('O', '0').replace(' ', '')
+
+    # Replace common hyphen variations with a standard hyphen
+    normalized_reg_no = re.sub(r'[-‐]', '-', normalized_reg_no)
+
+    return normalized_reg_no
+
+# # Function to prompt the user for normalization
+# def prompt_normalize(reg_no_to_normalize):
+#     normalized_reg_no = normalize_reg_no(reg_no_to_normalize)
+#     log_print(f"Do you want to normalize the registration number '{reg_no_to_normalize}' to '{normalized_reg_no}'? (yes/no): ")
+#     choice = input().strip().lower()
+    
+#     if choice == 'yes':
+#         return normalized_reg_no
+#     else:
+#         return reg_no_to_normalize
+
+
+
+# Function to prompt the user for normalization
+def prompt_normalize(reg_no_to_normalize):
+    detail_message = f"Do you want to normalize the registration number '{reg_no_to_normalize}' to '{normalize_reg_no(reg_no_to_normalize)}'? (yes/no)"
+    log_print(detail_message)
+
+    def on_yes():
+        reg_no_after_normalizing = normalize_reg_no(reg_no_to_normalize)
+        matching_course = None
+        for course, pattern in course_patterns.items():
+            if re.match(pattern, reg_no_after_normalizing):
+                matching_course = course
+                break
+        log_print(f"Normalized registration number: {reg_no_after_normalizing}")
+        # print(f"YES {matching_course} {reg_no_after_normalizing}")
+        return reg_no_after_normalizing, matching_course
+
+    def on_no():
+        matching_course = reg_no_to_normalize[:4]  # pick 1st 4 letters of reg. no.
+        log_print(f"User chose NOT to normalize the registration number.")
+        # print(f"NO {matching_course} {reg_no_to_normalize}")
+        return reg_no_to_normalize, matching_course
+
+    def on_exit():
+        log_print(f"User chose to end the program.")
+        sys.exit(0)  # Exit the program
+
+    def on_window_close():
+        on_exit()  # Call on_exit when the window is closed
+
+    root = tk.Tk()
+    root.title("Normalize Registration Number")
+
+    label = tk.Label(root, text=detail_message)
+    label.pack(padx=20, pady=10)
+
+    yes_button = tk.Button(root, text="Yes", command=lambda: set_result(on_yes()))
+    yes_button.pack(side=tk.LEFT, padx=20)
+
+    no_button = tk.Button(root, text="No", command=lambda: set_result(on_no()))
+    no_button.pack(side=tk.RIGHT, padx=20)
+
+    exit_button = tk.Button(root, text="Exit", command=lambda: set_result(on_exit()))
+    exit_button.pack(pady=10)
+
+    # Bind the window's close event to on_window_close
+    root.protocol("WM_DELETE_WINDOW", on_window_close)
+
+    def set_result(result):
+        nonlocal result_data
+        result_data = result
+        root.destroy()
+
+    result_data = None
+
+    root.mainloop()
+
+    return result_data
+
+
+# # Check the course pattern for each course
+# def check_course_pattern(reg_no_value, data, name_value, excel_file, internal_marks, file_course_code):
+#     matching_course = None
+#     for course, pattern in course_patterns.items():
+#         # print(course_patterns.items())
+#         if re.match(pattern, reg_no_value):
+#             matching_course = course
+#             break
+
+#     if matching_course:
+#         data.append((matching_course, file_course_code, reg_no_value, name_value, internal_marks))
+#     else:
+#         print(f"Anomaly in file '{excel_file}': Reg. No. value '{reg_no_value}' does not match any of the expected course patterns")
+
+
+
+
 # Check the course pattern for each course
 def check_course_pattern(reg_no_value, data, name_value, excel_file, internal_marks, file_course_code):
+    # global matching_course
     matching_course = None
     for course, pattern in course_patterns.items():
-        # print(course_patterns.items())
         if re.match(pattern, reg_no_value):
             matching_course = course
-            break
+            break # break loop if no match 
 
-    if matching_course:
-        data.append((matching_course, file_course_code, reg_no_value, name_value, internal_marks))
-    else:
-        print(f"Anomaly in file '{excel_file}': Reg. No. value '{reg_no_value}' does not match any of the expected course patterns")
+    if not matching_course:
+        log_print(f"Anomaly in file '{excel_file}': Reg. No. value '{reg_no_value}' does not match any of the expected course patterns")
+        reg_no_value, matching_course = prompt_normalize(reg_no_value)  # Prompt user for normalization
+            
+    data.append((matching_course, file_course_code, reg_no_value, name_value, internal_marks))
+
+
+
 
 
 def setup_logging():
@@ -208,4 +315,7 @@ def find_unit_name(mechatronics_units_path, unit_code):
                         if unit["Unit Code"] == unit_code:
                             return unit["Unit Title"]
     return "Unit not found"
+
+
+
 

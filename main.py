@@ -10,7 +10,7 @@ from modules.utilities import *
 if __name__ == "__main__":
 
     config_path = "config.toml"  # Specify the path to your TOML configuration file
-
+    
     # Load paths from configuration
     config = toml.load(config_path)
     input_folder_path = config["input_folder"]["path"]

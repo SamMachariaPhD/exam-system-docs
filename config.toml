@@ -20,29 +20,25 @@ columns = ["Ser. No.", "Reg. No.", "Name"] # DO NOT change this
 columns = ["TU", "Total", "Mean", "Grade", "Status"]
 
 [mechatronics_engineering_units]
-path = "data/units/mechatronics_engineering_units.json"
+path = "data/inputs/units/mechatronics_engineering_units.json"
 
 [input_folder]
-# path = "../individual_sheets"
-# path = "../individual_sheets2"
-path = "../2.1/sorted"
+path = "data/inputs/3.1/sorted"
 
 [running_report]
-path = "../running_report.txt"
+path = "data/outputs/running_report.txt"
 
 [consolidated_excel_output]
-# path = "../EMT4_2_2023.xlsx"
-# path = "../EMT2_2_2023.xlsx"
-path = "../EMT_2.1_2023.xlsx"
+path = "data/outputs/consolidated.xlsx"
 
 [pass_list_pdf_output]
-path = "../pass_list.pdf"
+path = "data/outputs/pass_list.pdf"
 
 [supp_list_pdf_output]
-path = "../supp_list.pdf"
+path = "data/outputs/supp_list.pdf"
 
 [senate_documents_output]
-path = "../senate_doc.pdf" 
+path = "data/outputs/senate_doc.pdf" 
 
 [course_patterns]
 E022 = "^E022-01-\\d+/\\d{4}$" # Mechatronics Engineering 

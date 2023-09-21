@@ -30,6 +30,10 @@ config_path = "config.toml"  # Specify the path to your TOML configuration file
 config = toml.load(config_path)
 input_folder_path = config["input_folder"]["path"]
 
+# # Define global variables at the module level with some default values
+# yr_processed = None  
+# sem_processed = None
+
 def consolidate_mark_sheet(mechatronics_units_path, input_folder_path, consolidated_excel_output_path, pass_list_pdf_output_path, supp_list_pdf_output_path, senate_doc_pdf_output_path, config_path):
     # Get a list of all Excel files in the input folder
 
@@ -516,6 +520,7 @@ def consolidate_mark_sheet(mechatronics_units_path, input_folder_path, consolida
     # Output file name for the combined PDF
     # Update senate doc name
     general_senate_pdf_path = senate_doc_pdf_output_path
+    # global yr_processed
     yr_processed = yr_to_process
 
     # Remove spaces from yr_processed and replace them with underscores
@@ -526,6 +531,7 @@ def consolidate_mark_sheet(mechatronics_units_path, input_folder_path, consolida
     # print(semester_of_study)
     to_numeric_conversions = {"FIRST": "1st", "SECOND": "2nd", "THIRD": "3rd", "FOURTH": "4th"}
 
+    # global sem_processed 
     sem_processed = to_numeric_conversions.get(semester_of_study, semester_of_study)+"_sem"
     # print(sem_processed)
 
@@ -538,7 +544,7 @@ def consolidate_mark_sheet(mechatronics_units_path, input_folder_path, consolida
 
 
     # Create a PDF merger object
-    pdf_merger = PyPDF2.PdfFileMerger()
+    pdf_merger = PyPDF2.PdfMerger()
 
     # Append each input PDF to the merger
     for pdf_file in input_pdfs:
@@ -547,6 +553,15 @@ def consolidate_mark_sheet(mechatronics_units_path, input_folder_path, consolida
     # Write the merged PDF to the output file
     with open(output_pdf_file, 'wb') as output_pdf:
         pdf_merger.write(output_pdf)
+
+
+
+    # Update consolidated doc name
+    general_consolidated_xlsx_path = senate_doc_pdf_output_path
+    # Split the file extension from general_senate_pdf_path
+    base_name, extension = os.path.splitext(consolidated_excel_output_path)
+    # Combine base_name, yr_processed, and the original extension to create general dynamic output file name 
+    general_consolidated_xlsx_path = f"{base_name}_{yr_processed}{sem_processed}{extension}"
 
 
 
@@ -602,11 +617,28 @@ def consolidate_mark_sheet(mechatronics_units_path, input_folder_path, consolida
         ws.column_dimensions[column[0].column_letter].width = adjusted_width
 
     # Save the workbook
-    wb.save(consolidated_excel_output_path)
+    wb.save(general_consolidated_xlsx_path)
 
 
 
-    log_print(f"Consolidated mark sheet saved as '{consolidated_excel_output_path}'.")
+    log_print(f"Consolidated mark sheet saved as '{general_consolidated_xlsx_path}'.")
+
+    # Update txt report name 
+    general_report_txt_path = running_report_path
+    # Split the file extension from general_senate_pdf_path
+    base_name, extension = os.path.splitext(running_report_path)
+    # Combine base_name, yr_processed, and the original extension to create general dynamic output file name 
+    general_report_txt_path = f"{base_name}_{yr_processed}{sem_processed}{extension}"
+    # Check if the current file exists before renaming it
+    if os.path.exists(running_report_path):
+        try:
+            # Rename the file
+            os.rename(running_report_path, general_report_txt_path)
+            print(f"File renamed from {running_report_path} to {general_report_txt_path}")
+        except OSError as e:
+            print(f"Error: Failed to rename the file. {e}")
+    else:
+        print(f"Error: The file {running_report_path} does not exist.")
 
     # Print files without "REG. NO." cell
     if files_without_reg_no:

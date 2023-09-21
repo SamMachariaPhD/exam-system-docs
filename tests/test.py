@@ -1,47 +1,55 @@
-import re
-import toml
-
-config_path = "config.toml"  # Specify the path to your TOML configuration file
-config = toml.load(config_path)
-
-# Load the course patterns from the configuration
-course_patterns = config["course_patterns"]
-
-# Define a function to normalize registration numbers
-def normalize_reg_no(reg_no):
-    # Replace O with 0 and remove spaces
-    normalized_reg_no = reg_no.replace('O', '0').replace(' ', '')
-
-    # Replace common hyphen variations with a standard hyphen
-    normalized_reg_no = re.sub(r'[-‐]', '-', normalized_reg_no)
-
-    return normalized_reg_no
-
 # Function to prompt the user for normalization
-def prompt_normalize(reg_no):
-    normalized_reg_no = normalize_reg_no(reg_no)
-    print(f"Do you want to normalize the registration number '{reg_no}' to '{normalized_reg_no}'? (yes/no): ")
-    choice = input().strip().lower()
-    
-    if choice == 'yes':
-        return normalized_reg_no
-    else:
-        return reg_no
+def prompt_normalize(reg_no_to_normalize):
+    detail_message = f"Do you want to normalize the registration number '{reg_no_to_normalize}' to '{normalize_reg_no(reg_no_to_normalize)}'? (yes/no)"
+    log_print(detail_message)
 
-# Check the course pattern for each course
-def check_course_pattern(reg_no_value, data, name_value, excel_file, internal_marks, file_course_code):
-    matching_course = None
-    reg_no_value = prompt_normalize(reg_no_value)  # Prompt user for normalization
-    
-    for course, pattern in course_patterns.items():
-        if re.match(pattern, reg_no_value):
-            matching_course = course
-            break
+    def on_yes():
+        reg_no_after_normalizing = normalize_reg_no(reg_no_to_normalize)
+        matching_course = None
+        for course, pattern in course_patterns.items():
+            if re.match(pattern, reg_no_after_normalizing):
+                matching_course = course
+                break
+        log_print(f"Normalized registration number: {reg_no_after_normalizing}")
+        return reg_no_after_normalizing, matching_course
 
-    if matching_course:
-        data.append((matching_course, file_course_code, reg_no_value, name_value, internal_marks))
-    else:
-        print(f"Anomaly in file '{excel_file}': Reg. No. value '{reg_no_value}' does not match any of the expected course patterns")
+    def on_no():
+        matching_course = reg_no_to_normalize[:4]  # pick 1st 4 letters of reg. no.
+        log_print(f"User chose NOT to normalize the registration number.")
+        return reg_no_to_normalize, matching_course
 
-# Example usage of the function
-check_course_pattern('E022-01-1415 /2021', data, 'John Doe', 'EMT 3105.xlsx', 95, 'EMT 3105')
+    def on_exit():
+        log_print(f"User chose to end the program.")
+        sys.exit(0)  # Exit the program
+
+    def on_window_close():
+        on_exit()  # Call on_exit when the window is closed
+
+    root = tk.Tk()
+    root.title("Normalize Registration Number")
+
+    label = tk.Label(root, text=detail_message)
+    label.pack(padx=20, pady=10)
+
+    yes_button = tk.Button(root, text="Yes", command=lambda: set_result(on_yes()))
+    yes_button.pack(side=tk.LEFT, padx=20)
+
+    no_button = tk.Button(root, text="No", command=lambda: set_result(on_no()))
+    no_button.pack(side=tk.RIGHT, padx=20)
+
+    exit_button = tk.Button(root, text="Exit", command=lambda: set_result(on_exit()))
+    exit_button.pack(pady=10)
+
+    # Bind the window's close event to on_window_close
+    root.protocol("WM_DELETE_WINDOW", on_window_close)
+
+    def set_result(result):
+        nonlocal result_data
+        result_data = result
+        root.destroy()
+
+    result_data = None
+
+    root.mainloop()
+
+    return result_data

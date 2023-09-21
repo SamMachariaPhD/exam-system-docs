@@ -1,0 +1,10 @@
+Starting the program...
+Exam files: {'EMT 4105', 'EMT 4204', 'EMT 4201', 'EMT 4205', 'SMA 3261', 'EMT 4202', 'EMT 4203', 'SMA 3272', 'EMT 4101', 'EMT 4102', 'EMT 4103', 'EMT 4104'}
+All filenames match Unit Codes and belong to the year: 4th Year
+Unit IGS 4101 Critical Thinking & Communication Skills Capstone Project 1 was NOT done in 4th Year 1st semester
+Unit IGS 4202 Critical Thinking & Communication Skills Capstone Project 2  was NOT done in 4th Year 2nd semester
+This seems to be 2nd Semester.
+All or most of 2nd Semester units were done.
+PDF report saved as 'data/outputs/pass_list.pdf'
+PDF report saved as 'data/outputs/supp_list.pdf'
+Consolidated mark sheet saved as 'data/outputs/consolidated_4th_year_2nd_sem.xlsx'.

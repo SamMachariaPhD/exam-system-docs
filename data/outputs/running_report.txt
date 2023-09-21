@@ -1,0 +1,3 @@
+Files without 'REG. NO.' cell:
+SMA 3121.xlsx
+Mark sheet consolidated and saved as 'data/outputs/consolidated.xlsx'.
