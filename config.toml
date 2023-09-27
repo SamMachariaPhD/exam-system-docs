@@ -23,7 +23,7 @@ columns = ["TU", "Total", "Mean", "Grade", "Status"]
 path = "data/inputs/units/mechatronics_engineering_units.json"
 
 [input_folder]
-path = "data/inputs/3.1/sorted"
+path = "data/inputs/2.1/sorted"
 
 [running_report]
 path = "data/outputs/running_report.txt"

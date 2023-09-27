@@ -27,3 +27,6 @@ if __name__ == "__main__":
     consolidate_mark_sheet(mechatronics_units_path, input_folder_path, consolidated_excel_output_path, pass_list_pdf_output_path, supp_list_pdf_output_path, senate_doc_pdf_output_path, config_path)
 
     log_print(f"Mark sheet consolidated and saved as '{consolidated_excel_output_path}'.")
+
+    # Call the function to show the completion message
+    show_completion_message()

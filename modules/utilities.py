@@ -7,6 +7,14 @@ import pandas as pd
 import tkinter as tk
 from tkinter import messagebox
 
+
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'  # Suppress pygame startup message
+import pygame
+# import tkinter as tk
+from tkinter import font
+
+
 config_path = "config.toml"  # Specify the path to your TOML configuration file
 
 # Load the configuration from the TOML file
@@ -148,7 +156,7 @@ def get_reg_no_data(df, excel_file, file_course_code):
             # open('data0.txt', 'w').writelines('\n'.join(map(str, data)) + '\n')
             if (reg_no, name) not in collected_data:
                 collected_data.append((course, file_course_code, reg_no, name, internal_marks))
-                # open('../collected_data.txt', 'w').writelines('\n'.join(map(str, collected_data)) + '\n')
+                open('../collected_data.txt', 'w').writelines('\n'.join(map(str, collected_data)) + '\n')
 
         # Store courses found in the current file
         course_files[excel_file] = set(course for course, _, _, _, _, in data)
@@ -192,10 +200,72 @@ def normalize_reg_no(reg_no_to_normalize):
 
 
 
+# # Function to prompt the user for normalization
+# def prompt_normalize(reg_no_to_normalize):
+#     detail_message = f"Do you want to normalize the registration number '{reg_no_to_normalize}' to '{normalize_reg_no(reg_no_to_normalize)}'? (yes/no)"
+#     log_print(detail_message)
+
+#     def on_yes():
+#         reg_no_after_normalizing = normalize_reg_no(reg_no_to_normalize)
+#         matching_course = None
+#         for course, pattern in course_patterns.items():
+#             if re.match(pattern, reg_no_after_normalizing):
+#                 matching_course = course
+#                 break
+#         log_print(f"Normalized registration number: {reg_no_after_normalizing}")
+#         # print(f"YES {matching_course} {reg_no_after_normalizing}")
+#         return reg_no_after_normalizing, matching_course
+
+#     def on_no():
+#         matching_course = reg_no_to_normalize[:4]  # pick 1st 4 letters of reg. no.
+#         log_print(f"User chose NOT to normalize the registration number.")
+#         # print(f"NO {matching_course} {reg_no_to_normalize}")
+#         return reg_no_to_normalize, matching_course
+
+#     def on_exit():
+#         log_print(f"User chose to end the program.")
+#         sys.exit(0)  # Exit the program
+
+#     def on_window_close():
+#         on_exit()  # Call on_exit when the window is closed
+
+#     root = tk.Tk()
+#     root.title("Normalize Registration Number")
+
+#     label = tk.Label(root, text=detail_message)
+#     label.pack(padx=20, pady=10)
+
+#     yes_button = tk.Button(root, text="Yes", command=lambda: set_result(on_yes()))
+#     yes_button.pack(side=tk.LEFT, padx=20)
+
+#     no_button = tk.Button(root, text="No", command=lambda: set_result(on_no()))
+#     no_button.pack(side=tk.RIGHT, padx=20)
+
+#     exit_button = tk.Button(root, text="Exit", command=lambda: set_result(on_exit()))
+#     exit_button.pack(pady=10)
+
+#     # Bind the window's close event to on_window_close
+#     root.protocol("WM_DELETE_WINDOW", on_window_close)
+
+#     def set_result(result):
+#         nonlocal result_data
+#         result_data = result
+#         root.destroy()
+
+#     result_data = None
+
+#     root.mainloop()
+
+#     return result_data
+
+
+
+# Initialize a global flag to remember if the user chose to normalize all
+normalize_all_flag = False
+
 # Function to prompt the user for normalization
 def prompt_normalize(reg_no_to_normalize):
-    detail_message = f"Do you want to normalize the registration number '{reg_no_to_normalize}' to '{normalize_reg_no(reg_no_to_normalize)}'? (yes/no)"
-    log_print(detail_message)
+    global normalize_all_flag
 
     def on_yes():
         reg_no_after_normalizing = normalize_reg_no(reg_no_to_normalize)
@@ -205,14 +275,25 @@ def prompt_normalize(reg_no_to_normalize):
                 matching_course = course
                 break
         log_print(f"Normalized registration number: {reg_no_after_normalizing}")
-        # print(f"YES {matching_course} {reg_no_after_normalizing}")
         return reg_no_after_normalizing, matching_course
+
+    if normalize_all_flag:
+        # If the user chose to normalize all in the previous call, default to on_yes()
+        return on_yes()
+
+    detail_message = f"Do you want to normalize the registration number '{reg_no_to_normalize}' to '{normalize_reg_no(reg_no_to_normalize)}'? (yes/no)"
+    log_print(detail_message)
 
     def on_no():
         matching_course = reg_no_to_normalize[:4]  # pick 1st 4 letters of reg. no.
         log_print(f"User chose NOT to normalize the registration number.")
-        # print(f"NO {matching_course} {reg_no_to_normalize}")
         return reg_no_to_normalize, matching_course
+
+    def on_normalize_all():
+        global normalize_all_flag
+        normalize_all_flag = True
+        log_print(f"User chose to normalize all.")
+        return on_yes()  # Default to on_yes() when normalizing all
 
     def on_exit():
         log_print(f"User chose to end the program.")
@@ -233,8 +314,11 @@ def prompt_normalize(reg_no_to_normalize):
     no_button = tk.Button(root, text="No", command=lambda: set_result(on_no()))
     no_button.pack(side=tk.RIGHT, padx=20)
 
-    exit_button = tk.Button(root, text="Exit", command=lambda: set_result(on_exit()))
-    exit_button.pack(pady=10)
+    normalize_all_button = tk.Button(root, text="Normalize All", command=lambda: set_result(on_normalize_all()))
+    normalize_all_button.pack(pady=10)
+
+    # exit_button = tk.Button(root, text="Exit", command=lambda: set_result(on_exit()))
+    # exit_button.pack(pady=10)
 
     # Bind the window's close event to on_window_close
     root.protocol("WM_DELETE_WINDOW", on_window_close)
@@ -249,6 +333,8 @@ def prompt_normalize(reg_no_to_normalize):
     root.mainloop()
 
     return result_data
+
+
 
 
 # # Check the course pattern for each course
@@ -319,3 +405,52 @@ def find_unit_name(mechatronics_units_path, unit_code):
 
 
 
+
+# Initialize pygame mixer without opening a window
+pygame.mixer.pre_init(44100, -16, 2, 2048)  # You can adjust these parameters as needed
+pygame.mixer.init()
+pygame.init()
+
+# Function to close the window after a delay
+def close_window_after_delay(window):
+    window.after(5000, window.destroy)  # Close the window after 5 seconds (5000 milliseconds)
+
+# Function to show the completion message and perform actions
+def show_completion_message():
+    # Create a tkinter window
+    root = tk.Tk()
+    root.title("Task Completion")
+    root.geometry("400x100")  # Set the initial window size here (width x height)
+
+    # Specify a font that includes a better-looking checkmark symbol
+    custom_font = font.Font(family="DejaVu Sans", size=12)
+    # custom_font = font.Font(family="Times New Roman", size=12)
+
+    # Create a list of messages with real tick symbols (checkmarks)
+    messages = [
+        "\u2713 Task Completed!",  # This checkmark is from the DejaVu Sans font
+        "\u2713 Check the output folder."
+    ]
+
+    # Display the messages as labels with the custom font
+    for message in messages:
+        label = tk.Label(root, text=message, font=custom_font)
+        label.pack(anchor='w', padx=20)
+
+    # Specify the absolute path to the sound file
+    sound_file = os.path.abspath("data/inputs/sounds/mixkit_co_arrow_whoosh_1491.wav")
+    if os.path.exists(sound_file):
+        pygame.mixer.music.load(sound_file)
+        pygame.mixer.music.play()
+
+    # Close the window after a delay
+    close_window_after_delay(root)
+
+    # Start the tkinter main loop
+    root.mainloop()
+
+# Call the function to show the completion message
+# show_completion_message()
+
+# Quit pygame to prevent the black window from appearing
+# pygame.quit()

@@ -10,6 +10,10 @@ from .utilities import log_print
 
 from collections import Counter
 
+
+import tkinter as tk
+from tkinter import messagebox
+
 multiple_years = []
 multiple_years_codes = []
 # Initialize a list to store the unit codes corresponding to the least common year(s)
@@ -117,7 +121,7 @@ def check_unit_codes_single_year(unit_codes, year_data):
         # Find the most common element
         most_common_year = counted_years.most_common(1)[0][0]
 
-        log_print("Warning: Units are coming from multiple years.")
+        log_print("Warning: Units are coming from multiple years!")
         log_print(f"The most common year is: {most_common_year}")
 
         # Find the least common year(s)
@@ -133,12 +137,70 @@ def check_unit_codes_single_year(unit_codes, year_data):
         print("Least Common Year(s):", least_common_years)
         print("Corresponding Unit Codes:", least_common_unit_codes)
 
-        # Ask the user if they want to continue with the most common year or halt the program
-        choice = input("Do you want to continue with the most common year? (yes/no): ")
+        # # Ask the user if they want to continue with the most common year or halt the program
+        # choice = input("Do you want to continue with the most common year? (yes/no): ")
 
-        if choice.lower() == 'yes':
-            log_print(f"Continuing with {most_common_year}")
-            return most_common_year
-        else:
-            log_print("Program halted.")
-            sys.exit(1)
+        # if choice.lower() == 'yes':
+        #     log_print(f"Continuing with {most_common_year}")
+        #     return most_common_year
+        # else:
+        #     log_print("Program halted.")
+        #     sys.exit(1)
+        return prompt_continue_or_halt(most_common_year)
+
+
+# Function to prompt the user to continue with the most common year or halt the program
+def prompt_continue_or_halt(most_common_year):
+    warning_message = "Warning: Units are coming from multiple years!"
+    common_year_message = f"The most common year is: {most_common_year}"
+    detail_message = f"Do you want to continue with the most common year '{most_common_year}'? (yes/no)"
+    log_print(detail_message)
+
+    def on_yes():
+        log_print(f"Continuing with {most_common_year}")
+        return most_common_year
+
+    def on_no():
+        log_print(f"A year must be selected. Program halted.")
+        sys.exit(1)  # Halt the program
+
+    def on_exit():
+        log_print(f"User chose to end the program.")
+        sys.exit(0)  # Exit the program
+
+    def on_window_close():
+        on_exit()  # Call on_exit when the window is closed
+
+    root = tk.Tk()
+    root.title("Continue or Halt")
+
+    # Create a multi-line label to display warning messages
+    warning_label = tk.Label(root, text=f"{warning_message}\n{common_year_message}", justify="left")
+    warning_label.pack(padx=20, pady=10)
+
+    label = tk.Label(root, text=detail_message)
+    label.pack(pady=10)
+
+    yes_button = tk.Button(root, text="Yes", command=lambda: set_result(on_yes()))
+    yes_button.pack(side=tk.LEFT, padx=20)
+
+    no_button = tk.Button(root, text="No", command=lambda: set_result(on_no()))
+    no_button.pack(side=tk.RIGHT, padx=20)
+
+    exit_button = tk.Button(root, text="Exit", command=lambda: set_result(on_exit()))
+    exit_button.pack(pady=10)
+
+    # Bind the window's close event to on_window_close
+    root.protocol("WM_DELETE_WINDOW", on_window_close)
+
+    def set_result(result):
+        nonlocal result_data
+        result_data = result
+        root.destroy()
+
+    result_data = None
+
+    root.mainloop()
+
+    return result_data
+

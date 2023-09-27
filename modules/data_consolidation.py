@@ -25,6 +25,7 @@ import PyPDF2 # For combining PDFs
 
 
 
+
 config_path = "config.toml"  # Specify the path to your TOML configuration file
 # Load the configuration from the TOML file
 config = toml.load(config_path)
@@ -171,7 +172,7 @@ def consolidate_mark_sheet(mechatronics_units_path, input_folder_path, consolida
     x_yr_2nd_semester_codes = [unit["Unit Code"] for unit in x_year_2nd_semester]
     #print(x_yr_1st_semester_codes)
     # print(least_common_unit_codes)
-    print(x_yr_2nd_semester_codes)
+    # print(x_yr_2nd_semester_codes)
 
     # Check if 'least_common_unit_codes' contains non-empty elements before inserting into my_list
     if any(elem.strip() for elem in least_common_unit_codes):

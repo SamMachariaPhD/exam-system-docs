@@ -35,3 +35,35 @@ project_folder/
 └── requirements.txt 
 └── README.md 
 └── Dockerfile
+
+## Virtual Environment 
+1. **Create and Activate a Virtual Environment**:
+   Create a virtual environment to isolate your project's dependencies. Run the following commands:
+
+   ```bash
+   python -m venv venv
+   ```
+
+   On Windows:
+
+   ```bash
+   venv\Scripts\activate
+   ```
+
+   On macOS and Linux:
+
+   ```bash
+   source venv/bin/activate
+   ```
+
+2. **Install Required Packages**:
+   Install the required packages listed in the `requirements.txt` file using `pip`. Run the following command:
+
+   ```bash
+   pip install --upgrade pip
+   pip freeze
+   ```
+   ```bash
+   pip install -r requirements.txt
+   pip freeze
+   ```

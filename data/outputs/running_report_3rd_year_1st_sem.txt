@@ -1,50 +1,37 @@
 Starting the program...
-Exam files: {'SMA 3121', 'EMT 3103', 'EMT 3104', 'EMT 3102', 'EMT 3101', 'EMT 3105'}
+Exam files: {'EMT 3103', 'EMT 3101', 'EMT 3102', 'EMT 3104', 'SMA 3121', 'EMT 3105'}
 All filenames match Unit Codes and belong to the year: 3rd Year
 Anomaly in file 'EMT 3105.xlsx': Reg. No. value 'E022-01-1415 /2021' does not match any of the expected course patterns
 Do you want to normalize the registration number 'E022-01-1415 /2021' to 'E022-01-1415/2021'? (yes/no)
+User chose to normalize all.
 Normalized registration number: E022-01-1415/2021
 Anomaly in file 'EMT 3105.xlsx': Reg. No. value 'EO22-01-1422/2021' does not match any of the expected course patterns
-Do you want to normalize the registration number 'EO22-01-1422/2021' to 'E022-01-1422/2021'? (yes/no)
 Normalized registration number: E022-01-1422/2021
 Anomaly in file 'EMT 3105.xlsx': Reg. No. value 'E022‐01‐1034/2020' does not match any of the expected course patterns
-Do you want to normalize the registration number 'E022‐01‐1034/2020' to 'E022-01-1034/2020'? (yes/no)
 Normalized registration number: E022-01-1034/2020
 Anomaly in file 'EMT 3103.xlsx': Reg. No. value 'E022-01-1415 /2021' does not match any of the expected course patterns
-Do you want to normalize the registration number 'E022-01-1415 /2021' to 'E022-01-1415/2021'? (yes/no)
 Normalized registration number: E022-01-1415/2021
 Anomaly in file 'EMT 3103.xlsx': Reg. No. value 'EO22-01-1422/2021' does not match any of the expected course patterns
-Do you want to normalize the registration number 'EO22-01-1422/2021' to 'E022-01-1422/2021'? (yes/no)
 Normalized registration number: E022-01-1422/2021
 Anomaly in file 'EMT 3103.xlsx': Reg. No. value 'E022‐01‐1034/2020' does not match any of the expected course patterns
-Do you want to normalize the registration number 'E022‐01‐1034/2020' to 'E022-01-1034/2020'? (yes/no)
 Normalized registration number: E022-01-1034/2020
 Anomaly in file 'EMT 3102.xlsx': Reg. No. value 'E022-01-1415 /2021' does not match any of the expected course patterns
-Do you want to normalize the registration number 'E022-01-1415 /2021' to 'E022-01-1415/2021'? (yes/no)
 Normalized registration number: E022-01-1415/2021
 Anomaly in file 'EMT 3102.xlsx': Reg. No. value 'EO22-01-1422/2021' does not match any of the expected course patterns
-Do you want to normalize the registration number 'EO22-01-1422/2021' to 'E022-01-1422/2021'? (yes/no)
 Normalized registration number: E022-01-1422/2021
 Anomaly in file 'EMT 3102.xlsx': Reg. No. value 'E022‐01‐1034/2020' does not match any of the expected course patterns
-Do you want to normalize the registration number 'E022‐01‐1034/2020' to 'E022-01-1034/2020'? (yes/no)
 Normalized registration number: E022-01-1034/2020
 Anomaly in file 'EMT 3101.xlsx': Reg. No. value 'E022-01-1415 /2021' does not match any of the expected course patterns
-Do you want to normalize the registration number 'E022-01-1415 /2021' to 'E022-01-1415/2021'? (yes/no)
 Normalized registration number: E022-01-1415/2021
 Anomaly in file 'EMT 3101.xlsx': Reg. No. value 'EO22-01-1422/2021' does not match any of the expected course patterns
-Do you want to normalize the registration number 'EO22-01-1422/2021' to 'E022-01-1422/2021'? (yes/no)
 Normalized registration number: E022-01-1422/2021
 Anomaly in file 'EMT 3101.xlsx': Reg. No. value 'E022‐01‐1034/2020' does not match any of the expected course patterns
-Do you want to normalize the registration number 'E022‐01‐1034/2020' to 'E022-01-1034/2020'? (yes/no)
 Normalized registration number: E022-01-1034/2020
 Anomaly in file 'EMT 3104.xlsx': Reg. No. value 'E022-01-1415 /2021' does not match any of the expected course patterns
-Do you want to normalize the registration number 'E022-01-1415 /2021' to 'E022-01-1415/2021'? (yes/no)
 Normalized registration number: E022-01-1415/2021
 Anomaly in file 'EMT 3104.xlsx': Reg. No. value 'EO22-01-1422/2021' does not match any of the expected course patterns
-Do you want to normalize the registration number 'EO22-01-1422/2021' to 'E022-01-1422/2021'? (yes/no)
 Normalized registration number: E022-01-1422/2021
 Anomaly in file 'EMT 3104.xlsx': Reg. No. value 'E022‐01‐1034/2020' does not match any of the expected course patterns
-Do you want to normalize the registration number 'E022‐01‐1034/2020' to 'E022-01-1034/2020'? (yes/no)
 Normalized registration number: E022-01-1034/2020
 Unit SMA 3121 Complex Analysis was NOT done in 3rd Year 1st semester
 Unit IGS 3101 Communication Skills: Traditional African Health and Environmental Concerns was NOT done in 3rd Year 1st semester
