@@ -447,62 +447,137 @@
 #     return result_data
 
 
-import os
-os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'  # Suppress pygame startup message
-import pygame
+# import os
+# os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'  # Suppress pygame startup message
+# import pygame
+# import tkinter as tk
+# from tkinter import font
+
+# # Initialize pygame mixer without opening a window
+# pygame.mixer.pre_init(44100, -16, 2, 2048)  # You can adjust these parameters as needed
+# pygame.mixer.init()
+# pygame.init()
+
+# # Function to close the window after a delay
+# def close_window_after_delay(window):
+#     window.after(5000, window.destroy)  # Close the window after 5 seconds (5000 milliseconds)
+
+# # Function to show the completion message and perform actions
+# def show_completion_message():
+#     # Create a tkinter window
+#     root = tk.Tk()
+#     root.title("Task Completion")
+#     root.geometry("400x300")  # Set the initial window size here (width x height)
+
+#     # Specify a font that includes a better-looking checkmark symbol
+#     custom_font = font.Font(family="DejaVu Sans", size=12)
+
+#     # Create a list of messages with real tick symbols (checkmarks)
+#     messages = [
+#         "\u2713 Task Completed!",  # This checkmark is from the DejaVu Sans font
+#         "\u2713 Check output files in the output folder."
+#     ]
+
+#     # Display the messages as labels with the custom font
+#     for message in messages:
+#         label = tk.Label(root, text=message, font=custom_font)
+#         label.pack(anchor='w', padx=20)
+
+#     # Specify the absolute path to the sound file
+#     sound_file = os.path.abspath("../data/inputs/sounds/mixkit_co_arrow_whoosh_1491.wav")
+#     if os.path.exists(sound_file):
+#         pygame.mixer.music.load(sound_file)
+#         pygame.mixer.music.play()
+
+#     # Close the window after a delay
+#     close_window_after_delay(root)
+
+#     # Start the tkinter main loop
+#     root.mainloop()
+
+# # Call the function to show the completion message
+# show_completion_message()
+
+# # Quit pygame to prevent the black window from appearing
+# pygame.quit()
+
+
+
+import sys
 import tkinter as tk
-from tkinter import font
+from tkinter import filedialog
 
-# Initialize pygame mixer without opening a window
-pygame.mixer.pre_init(44100, -16, 2, 2048)  # You can adjust these parameters as needed
-pygame.mixer.init()
-pygame.init()
+def select_input_output_folders():
+    def choose_input_folder():
+        input_folder = filedialog.askdirectory()
+        input_folder_path.set(input_folder)
 
-# Function to close the window after a delay
-def close_window_after_delay(window):
-    window.after(5000, window.destroy)  # Close the window after 5 seconds (5000 milliseconds)
+    def choose_output_folder():
+        output_folder = filedialog.askdirectory()
+        output_folder_path.set(output_folder)
 
-# Function to show the completion message and perform actions
-def show_completion_message():
-    # Create a tkinter window
+    def okay_button_clicked():
+        input_path = input_folder_path.get()
+        output_path = output_folder_path.get()
+
+        if not input_path or not output_path:
+            print("Input and output folders must be specified.")
+            root.destroy()
+            sys.exit(0)  # Exit the program
+        else:
+            print("Selected Input Folder:", input_path)
+            print("Selected Output Folder:", output_path)
+            root.destroy()
+
+    def on_window_close():
+        print("The user chose to end the program.")
+        root.destroy()
+        sys.exit(0)  # Exit the program
+
+    # Create the main window
     root = tk.Tk()
-    root.title("Task Completion")
-    root.geometry("400x300")  # Set the initial window size here (width x height)
+    root.title("Folder Selection")
 
-    # Specify a font that includes a better-looking checkmark symbol
-    custom_font = font.Font(family="DejaVu Sans", size=12)
+    # Variables to store folder paths
+    input_folder_path = tk.StringVar()
+    output_folder_path = tk.StringVar()
 
-    # Create a list of messages with real tick symbols (checkmarks)
-    messages = [
-        "\u2713 Task Completed!",  # This checkmark is from the DejaVu Sans font
-        "\u2713 Check output files in the output folder."
-    ]
+    # Input folder label and "Browse" button
+    input_label = tk.Label(root, text="Select Input Folder:")
+    input_label.grid(row=0, column=0, sticky="w", padx=(20, 0))
+    input_button = tk.Button(root, text="Browse", command=choose_input_folder)
+    input_button.grid(row=0, column=1, padx=(0, 20))
 
-    # Display the messages as labels with the custom font
-    for message in messages:
-        label = tk.Label(root, text=message, font=custom_font)
-        label.pack(anchor='w', padx=20)
+    # Chosen input folder path label
+    input_path_label = tk.Label(root, textvariable=input_folder_path)
+    input_path_label.grid(row=1, column=0, columnspan=2, padx=20)
 
-    # Specify the absolute path to the sound file
-    sound_file = os.path.abspath("../data/inputs/sounds/mixkit_co_arrow_whoosh_1491.wav")
-    if os.path.exists(sound_file):
-        pygame.mixer.music.load(sound_file)
-        pygame.mixer.music.play()
+    # Output folder label and "Browse" button
+    output_label = tk.Label(root, text="Select Output Folder:")
+    output_label.grid(row=2, column=0, sticky="w", padx=(20, 0))
+    output_button = tk.Button(root, text="Browse", command=choose_output_folder)
+    output_button.grid(row=2, column=1, padx=(0, 20))
 
-    # Close the window after a delay
-    close_window_after_delay(root)
+    # Chosen output folder path label
+    output_path_label = tk.Label(root, textvariable=output_folder_path)
+    output_path_label.grid(row=3, column=0, columnspan=2, padx=20)
 
-    # Start the tkinter main loop
+    # "Okay" button to validate and close the window
+    okay_button = tk.Button(root, text="Okay", command=okay_button_clicked)
+    okay_button.grid(row=4, column=0, columnspan=2, pady=(10, 0))
+
+    # Bind the window's close event to on_window_close
+    root.protocol("WM_DELETE_WINDOW", on_window_close)
+
     root.mainloop()
 
-# Call the function to show the completion message
-show_completion_message()
+    # Return the selected input and output folder paths
+    return input_folder_path.get(), output_folder_path.get()
 
-# Quit pygame to prevent the black window from appearing
-pygame.quit()
-
-
-
+# Call the function to select input and output folders
+input_path, output_path = select_input_output_folders()
+print("Input Folder Path:", input_path)
+print("Output Folder Path:", output_path)
 
 
 

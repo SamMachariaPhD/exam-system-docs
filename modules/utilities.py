@@ -6,12 +6,11 @@ import pandas as pd
 
 import tkinter as tk
 from tkinter import messagebox
-
+from tkinter import filedialog
 
 import os
-os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'  # Suppress pygame startup message
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'  # Must be before pygame to SUPPRESS pygame startup message
 import pygame
-# import tkinter as tk
 from tkinter import font
 
 
@@ -20,15 +19,32 @@ config_path = "config.toml"  # Specify the path to your TOML configuration file
 # Load the configuration from the TOML file
 config = toml.load(config_path)
 
-input_folder_path = config["input_folder"]["path"]
-running_report_path = config["running_report"]["path"]
+# input_folder_path = config["input_folder"]["path"]
+# running_report_path = config["running_report"]["path"]
 
 # Load the course patterns from the configuration
 course_patterns = config["course_patterns"]
 # course_patterns = config["course_patterns"]["E022"] # Mechatronics 
 # print(course_patterns)
 
-excel_files = [file for file in os.listdir(input_folder_path) if file.endswith('.xlsx')]
+# excel_files = [file for file in os.listdir(input_folder_path) if file.endswith('.xlsx')]
+
+
+
+def list_excel_files(input_folder_path):
+    """
+    Lists all Excel files in the specified input folder.
+
+    Args:
+        input_folder_path (str): The path to the input folder.
+
+    Returns:
+        List[str]: A list of Excel file names in the input folder.
+    """
+    excel_files = [file for file in os.listdir(input_folder_path) if file.endswith('.xlsx')]
+    return excel_files
+
+
 
 # List to store collected data
 collected_data = []
@@ -44,7 +60,7 @@ files_without_reg_no = []
 
 
 
-def loop_to_consolidate(excel_files, consolidated_df, collected_data):
+def loop_to_consolidate(input_folder_path, excel_files, consolidated_df, collected_data):
     # Loop through each Excel file and consolidate the data
     for excel_file in excel_files:
         file_path = os.path.join(input_folder_path, excel_file)
@@ -187,76 +203,6 @@ def normalize_reg_no(reg_no_to_normalize):
 
     return normalized_reg_no
 
-# # Function to prompt the user for normalization
-# def prompt_normalize(reg_no_to_normalize):
-#     normalized_reg_no = normalize_reg_no(reg_no_to_normalize)
-#     log_print(f"Do you want to normalize the registration number '{reg_no_to_normalize}' to '{normalized_reg_no}'? (yes/no): ")
-#     choice = input().strip().lower()
-    
-#     if choice == 'yes':
-#         return normalized_reg_no
-#     else:
-#         return reg_no_to_normalize
-
-
-
-# # Function to prompt the user for normalization
-# def prompt_normalize(reg_no_to_normalize):
-#     detail_message = f"Do you want to normalize the registration number '{reg_no_to_normalize}' to '{normalize_reg_no(reg_no_to_normalize)}'? (yes/no)"
-#     log_print(detail_message)
-
-#     def on_yes():
-#         reg_no_after_normalizing = normalize_reg_no(reg_no_to_normalize)
-#         matching_course = None
-#         for course, pattern in course_patterns.items():
-#             if re.match(pattern, reg_no_after_normalizing):
-#                 matching_course = course
-#                 break
-#         log_print(f"Normalized registration number: {reg_no_after_normalizing}")
-#         # print(f"YES {matching_course} {reg_no_after_normalizing}")
-#         return reg_no_after_normalizing, matching_course
-
-#     def on_no():
-#         matching_course = reg_no_to_normalize[:4]  # pick 1st 4 letters of reg. no.
-#         log_print(f"User chose NOT to normalize the registration number.")
-#         # print(f"NO {matching_course} {reg_no_to_normalize}")
-#         return reg_no_to_normalize, matching_course
-
-#     def on_exit():
-#         log_print(f"User chose to end the program.")
-#         sys.exit(0)  # Exit the program
-
-#     def on_window_close():
-#         on_exit()  # Call on_exit when the window is closed
-
-#     root = tk.Tk()
-#     root.title("Normalize Registration Number")
-
-#     label = tk.Label(root, text=detail_message)
-#     label.pack(padx=20, pady=10)
-
-#     yes_button = tk.Button(root, text="Yes", command=lambda: set_result(on_yes()))
-#     yes_button.pack(side=tk.LEFT, padx=20)
-
-#     no_button = tk.Button(root, text="No", command=lambda: set_result(on_no()))
-#     no_button.pack(side=tk.RIGHT, padx=20)
-
-#     exit_button = tk.Button(root, text="Exit", command=lambda: set_result(on_exit()))
-#     exit_button.pack(pady=10)
-
-#     # Bind the window's close event to on_window_close
-#     root.protocol("WM_DELETE_WINDOW", on_window_close)
-
-#     def set_result(result):
-#         nonlocal result_data
-#         result_data = result
-#         root.destroy()
-
-#     result_data = None
-
-#     root.mainloop()
-
-#     return result_data
 
 
 
@@ -336,24 +282,6 @@ def prompt_normalize(reg_no_to_normalize):
 
 
 
-
-# # Check the course pattern for each course
-# def check_course_pattern(reg_no_value, data, name_value, excel_file, internal_marks, file_course_code):
-#     matching_course = None
-#     for course, pattern in course_patterns.items():
-#         # print(course_patterns.items())
-#         if re.match(pattern, reg_no_value):
-#             matching_course = course
-#             break
-
-#     if matching_course:
-#         data.append((matching_course, file_course_code, reg_no_value, name_value, internal_marks))
-#     else:
-#         print(f"Anomaly in file '{excel_file}': Reg. No. value '{reg_no_value}' does not match any of the expected course patterns")
-
-
-
-
 # Check the course pattern for each course
 def check_course_pattern(reg_no_value, data, name_value, excel_file, internal_marks, file_course_code):
     # global matching_course
@@ -371,20 +299,45 @@ def check_course_pattern(reg_no_value, data, name_value, excel_file, internal_ma
 
 
 
+# def setup_logging(running_report_path):
+#     # Create or recreate the 'running_reports.txt' file
+#     with open(running_report_path, 'w') as log_file:
+#         pass  # This will create an empty file if it doesn't exist or truncate it if it does
+
+# def log_print(text):
+#     # Append the text to 'running_reports.txt'
+#     with open(running_report_path, 'a') as log_file:
+#         log_file.write(text + '\n')
+    
+#     # Print the text to the console
+#     print(text)
 
 
-def setup_logging():
+# running_report_path = None  # Initialize the global variable
+# print(f"outside utils: {running_report_path}")
+
+def setup_logging(log_path):
+    global running_report_path
+    running_report_path = log_path
+    # print(f"setup: {running_report_path}")
     # Create or recreate the 'running_reports.txt' file
     with open(running_report_path, 'w') as log_file:
-        pass  # This will create an empty file if it doesn't exist or truncate it if it does
+        # pass  # This will create an empty file if it doesn't exist or truncate it if it does
+        for message in init_path_messages:
+            log_file.write(message + "\n")
+
 
 def log_print(text):
+    global running_report_path
+    # print(f"log: {running_report_path}")
     # Append the text to 'running_reports.txt'
     with open(running_report_path, 'a') as log_file:
         log_file.write(text + '\n')
     
     # Print the text to the console
     print(text)
+
+
 
 # Find unit name given unit code 
 def find_unit_name(mechatronics_units_path, unit_code):
@@ -454,3 +407,78 @@ def show_completion_message():
 
 # Quit pygame to prevent the black window from appearing
 # pygame.quit()
+
+
+init_path_messages = []
+
+
+def select_input_output_folders():
+    def choose_input_folder():
+        input_folder = filedialog.askdirectory()
+        input_folder_path.set(input_folder)
+
+    def choose_output_folder():
+        output_folder = filedialog.askdirectory()
+        output_folder_path.set(output_folder)
+
+    def okay_button_clicked():
+        input_path = input_folder_path.get()
+        output_path = output_folder_path.get()
+
+        if not input_path or not output_path:
+            # log_print("Exit: Input and output folders must be specified.")
+            init_path_messages.append("Exit: Input and output folders must be specified.")
+            root.destroy()
+            sys.exit(0)  # Exit the program
+        else:
+            # log_print(f"Selected Input Folder: {input_path}")
+            init_path_messages.append(f"Selected Input Folder: {input_path}")
+            # log_print(f"Selected Output Folder: {output_path}")
+            init_path_messages.append(f"Selected Output Folder: {output_path}")
+            root.destroy()
+
+    def on_window_close():
+        # log_print("The user chose to end the program.")
+        init_path_messages.append("The user chose to end the program.")
+        root.destroy()
+        sys.exit(0)  # Exit the program
+
+    # Create the main window
+    root = tk.Tk()
+    root.title("Folder Selection")
+
+    # Variables to store folder paths
+    input_folder_path = tk.StringVar()
+    output_folder_path = tk.StringVar()
+
+    # Input folder label and "Browse" button
+    input_label = tk.Label(root, text="Select Input Folder:")
+    input_label.grid(row=0, column=0, sticky="w", padx=(20, 0))
+    input_button = tk.Button(root, text="Browse", command=choose_input_folder)
+    input_button.grid(row=0, column=1, padx=(0, 20))
+
+    # Chosen input folder path label
+    input_path_label = tk.Label(root, textvariable=input_folder_path)
+    input_path_label.grid(row=1, column=0, columnspan=2, padx=20)
+
+    # Output folder label and "Browse" button
+    output_label = tk.Label(root, text="Select Output Folder:")
+    output_label.grid(row=2, column=0, sticky="w", padx=(20, 0))
+    output_button = tk.Button(root, text="Browse", command=choose_output_folder)
+    output_button.grid(row=2, column=1, padx=(0, 20))
+
+    # Chosen output folder path label
+    output_path_label = tk.Label(root, textvariable=output_folder_path)
+    output_path_label.grid(row=3, column=0, columnspan=2, padx=20)
+
+    # "Okay" button to validate and close the window
+    okay_button = tk.Button(root, text="Okay", command=okay_button_clicked)
+    okay_button.grid(row=4, column=0, columnspan=2, pady=(10, 0))
+
+    # Bind the window's close event to on_window_close
+    root.protocol("WM_DELETE_WINDOW", on_window_close)
+
+    root.mainloop()
+
+    # Return the selected input and output folder paths
+    return input_folder_path.get(), output_folder_path.get()

@@ -1,5 +1,5 @@
 Starting the program...
-Exam files: {'SMA 2119', 'EMT 2201', 'EMT 2104', 'EMT 2102', 'EMT 2101', 'EMT 1203'}
+Exam files: {'EMT 2104', 'SMA 2119', 'EMT 1203', 'EMT 2102', 'EMT 2101', 'EMT 2201'}
 Error: Units are coming from multiple years.
 Unit Code: EMT 1203 is from years: 1st Year
 Unit Code: EMT 2101 is from years: 2nd Year

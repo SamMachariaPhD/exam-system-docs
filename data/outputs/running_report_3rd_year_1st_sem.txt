@@ -1,5 +1,5 @@
 Starting the program...
-Exam files: {'EMT 3103', 'EMT 3101', 'EMT 3102', 'EMT 3104', 'SMA 3121', 'EMT 3105'}
+Exam files: {'EMT 3105', 'EMT 3104', 'EMT 3103', 'EMT 3101', 'SMA 3121', 'EMT 3102'}
 All filenames match Unit Codes and belong to the year: 3rd Year
 Anomaly in file 'EMT 3105.xlsx': Reg. No. value 'E022-01-1415 /2021' does not match any of the expected course patterns
 Do you want to normalize the registration number 'E022-01-1415 /2021' to 'E022-01-1415/2021'? (yes/no)

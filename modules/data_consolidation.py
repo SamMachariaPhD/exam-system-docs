@@ -29,13 +29,13 @@ import PyPDF2 # For combining PDFs
 config_path = "config.toml"  # Specify the path to your TOML configuration file
 # Load the configuration from the TOML file
 config = toml.load(config_path)
-input_folder_path = config["input_folder"]["path"]
+# input_folder_path = config["input_folder"]["path"]
 
 # # Define global variables at the module level with some default values
 # yr_processed = None  
 # sem_processed = None
 
-def consolidate_mark_sheet(mechatronics_units_path, input_folder_path, consolidated_excel_output_path, pass_list_pdf_output_path, supp_list_pdf_output_path, senate_doc_pdf_output_path, config_path):
+def consolidate_mark_sheet(mechatronics_units_path, input_folder_path, excel_files, consolidated_excel_output_path, pass_list_pdf_output_path, supp_list_pdf_output_path, senate_doc_pdf_output_path, running_report_path, config_path):
     # Get a list of all Excel files in the input folder
 
     center_names = fetch_center_names(input_folder_path)
@@ -70,7 +70,7 @@ def consolidate_mark_sheet(mechatronics_units_path, input_folder_path, consolida
     additional_columns = config["additional_columns"]["columns"]
 
     # Generate the center names dynamically
-    center_names = fetch_center_names(config["input_folder"]["path"])
+    center_names = fetch_center_names(input_folder_path)
     center_columns = list(center_names)
     # print(center_columns)
 
@@ -81,7 +81,7 @@ def consolidate_mark_sheet(mechatronics_units_path, input_folder_path, consolida
     consolidated_df = pd.DataFrame(columns=new_column_order)
 
     # Loop through each Excel file and consolidate the data
-    course_code = loop_to_consolidate(excel_files, consolidated_df, collected_data)
+    course_code = loop_to_consolidate(input_folder_path, excel_files, consolidated_df, collected_data)
 
 
     # Group collected data by Reg. No.
@@ -624,6 +624,12 @@ def consolidate_mark_sheet(mechatronics_units_path, input_folder_path, consolida
 
     log_print(f"Consolidated mark sheet saved as '{general_consolidated_xlsx_path}'.")
 
+    # Print files without "REG. NO." cell
+    if files_without_reg_no:
+        log_print("Files without 'REG. NO.' cell:")
+        for file in files_without_reg_no:
+            log_print(file)
+
     # Update txt report name 
     general_report_txt_path = running_report_path
     # Split the file extension from general_senate_pdf_path
@@ -635,14 +641,8 @@ def consolidate_mark_sheet(mechatronics_units_path, input_folder_path, consolida
         try:
             # Rename the file
             os.rename(running_report_path, general_report_txt_path)
-            print(f"File renamed from {running_report_path} to {general_report_txt_path}")
+            log_print(f"File renamed from {running_report_path} to {general_report_txt_path}")
         except OSError as e:
-            print(f"Error: Failed to rename the file. {e}")
+            log_print(f"Error: Failed to rename the file. {e}")
     else:
-        print(f"Error: The file {running_report_path} does not exist.")
-
-    # Print files without "REG. NO." cell
-    if files_without_reg_no:
-        log_print("Files without 'REG. NO.' cell:")
-        for file in files_without_reg_no:
-            log_print(file)
+        log_print(f"Error: The file {running_report_path} does not exist.")

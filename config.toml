@@ -22,23 +22,23 @@ columns = ["TU", "Total", "Mean", "Grade", "Status"]
 [mechatronics_engineering_units]
 path = "data/inputs/units/mechatronics_engineering_units.json"
 
-[input_folder]
-path = "data/inputs/2.1/sorted"
+# [input_folder]
+# path = "data/inputs/3.1/sorted"
 
-[running_report]
-path = "data/outputs/running_report.txt"
+# [running_report]
+# path = "data/outputs/running_report.txt"
 
-[consolidated_excel_output]
-path = "data/outputs/consolidated.xlsx"
+# [consolidated_excel_output]
+# path = "data/outputs/consolidated.xlsx"
 
-[pass_list_pdf_output]
-path = "data/outputs/pass_list.pdf"
+# [pass_list_pdf_output]
+# path = "data/outputs/pass_list.pdf"
 
-[supp_list_pdf_output]
-path = "data/outputs/supp_list.pdf"
+# [supp_list_pdf_output]
+# path = "data/outputs/supp_list.pdf"
 
-[senate_documents_output]
-path = "data/outputs/senate_doc.pdf" 
+# [senate_documents_output]
+# path = "data/outputs/senate_doc.pdf" 
 
 [course_patterns]
 E022 = "^E022-01-\\d+/\\d{4}$" # Mechatronics Engineering 
