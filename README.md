@@ -1,69 +1,127 @@
-# Open EProS: Open-source Exam Processing System
+# Open EProS: Exam Processing System
 
-**Open EProS** (Open-source Exam Processing System) is a comprehensive software solution designed specifically for educators. This powerful tool streamlines the entire exam processing workflow, from handling raw exam results to generating insights and recommendations based on predefined exam rules and workflows.
+**Open EProS** is a comprehensive, secure exam processing system designed for university departments. This powerful desktop application streamlines the entire exam workflow, from handling raw Excel results to generating official senate documents and maintaining student academic histories.
 
 ## Key Features
 
-### Flexibility
-Open EProS provides educators with the flexibility to process data and exams according to their preferences. It empowers users to handle data as securely as they see fit and adapt the software to their specific needs.
+### 🔐 Secure & Licensed
+- **Online license verification**: Email-based authentication with institutional control
+- **Data privacy**: All student data remains local and secure
+- **Version control**: Automatic updates and system messages
 
-### Transparency
-Built on open-source principles, Open EProS provides transparency by making its source code accessible. This openness allows educators and developers to review, modify, and enhance the system as needed.
+### 📊 Comprehensive Processing
+- **Excel input processing**: Familiar format for lecturers
+- **Multi-year tracking**: 5-year degree programs with semester-by-semester tracking
+- **Student status management**: Academic leave, suspensions, repeats, financial holds
+- **Historical validation**: Automatic flagging of status conflicts
 
-### Scalability
-The software is highly scalable and capable of efficiently managing a large number of students and their results. This scalability makes it suitable for educational institutions of various sizes.
+### 📋 Official Document Generation
+- **Senate documents**: PDF and DOCX formats in official university style
+- **Pass/Supplementary lists**: Automated classification and formatting
+- **Transcripts**: Individual and batch generation
+- **Audit trails**: Complete change tracking and evidence logging
 
-### Recommendation Engine
-Open EProS includes a powerful recommendation engine, enabling educators to gain valuable insights from exam data. This engine assists in identifying student status and areas for improvement based on exam results and predefined rules.
+### 🏗️ Robust Architecture
+- **Local database**: SQLite for fast processing and offline capability
+- **Rule engine**: JSON-based academic regulations
+- **Change tracking**: Monitor data modifications vs original Excel files
+- **Cross-platform**: Runs on Windows, Mac, and Linux 
 
-In summary, Open EProS is a flexible, transparent, and scalable software solution that simplifies exam processing tasks for educators. It leverages data analysis and recommendations to enhance the educational experience, all while embracing the collaborative spirit of open-source software. 
+## Repository Structure
 
-## The Project Organization
+This project uses a **multi-repository architecture** for security and deployment:
 
-![Screenshot from 2023-09-20 11-43-50](https://github.com/SiliconWit/exam-processing-system/assets/14171794/41a465b8-2df5-463d-a6d3-92476779d9b5)
+### 🔒 Private Development Repo
+**[exam-system-private](https://github.com/SamMachariaPhD/exam-system-private)** (this repo)
+- Contains all source code and business logic
+- Student data and databases remain local (not in git)
+- Development and testing environment
 
+### 📦 Public Releases Repo
+**[exam-system-releases](https://github.com/SamMachariaPhD/exam-system-releases)**
+- Compiled executables for distribution
+- Installation instructions and changelog
+- No source code exposed
+
+### 🔑 Authentication Repo
+**[exam-system-auth](https://github.com/SamMachariaPhD/exam-system-auth)**
+- License verification JSON file
+- System messages and update notifications
+- API endpoint: `https://raw.githubusercontent.com/SamMachariaPhD/exam-system-auth/main/licenses.json`
+
+## Project Organization
+
+```
 project_folder/
 ├── config.toml                 # Configuration file
-├── data/                       # Folder for input/output data
+├── data/                       # Local student data (not in git)
+│   ├── inputs/                 # Raw Excel files from lecturers
+│   └── outputs/                # Generated reports and documents
 ├── modules/
-│   ├── __init__.py             # Can be an empty __init__ file to mark it as a package
-│   ├── file_processing.py      # File processing functions
-│   ├── data_consolidation.py   # Data consolidation functions
+│   ├── __init__.py
+│   ├── file_processing.py      # Excel file handling
+│   ├── data_consolidation.py   # Data processing and PDF generation
 │   ├── utilities.py            # Shared utilities and constants
-│   └── rule_engine.py          # Rules that generate recommendations 
-└── main.py                     # Main script to run the project
-└── requirements.txt 
-└── README.md 
-└── Dockerfile
+│   ├── rule_engine.py          # Academic rules and recommendations
+│   └── auth/                   # Authentication module (planned)
+├── database/                   # SQLite databases (planned)
+├── main.py                     # Main application entry point
+└── requirements.txt
+```
 
-## Virtual Environment 
-1. **Create and Activate a Virtual Environment**:
-   Create a virtual environment to isolate your project's dependencies. Run the following commands:
+## Development Setup
 
+### Prerequisites
+- Python 3.7+
+- Git
+- Internet connection for license verification
+
+### Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/SamMachariaPhD/exam-system-private.git
+   cd exam-system-private
+   ```
+
+2. **Create and activate virtual environment**:
    ```bash
    python -m venv venv
-   ```
 
-   On Windows:
-
-   ```bash
+   # On Windows:
    venv\Scripts\activate
-   ```
 
-   On macOS and Linux:
-
-   ```bash
+   # On macOS and Linux:
    source venv/bin/activate
    ```
 
-2. **Install Required Packages**:
-   Install the required packages listed in the `requirements.txt` file using `pip`. Run the following command:
-
+3. **Install dependencies**:
    ```bash
    pip install --upgrade pip
-   pip freeze
-   ```
-   ```bash
    pip install -r requirements.txt
-   pip freeze
    ```
+
+4. **Run the application**:
+   ```bash
+   python main.py
+   ```
+
+## Data Privacy & Security
+
+⚠️ **Important**: This system is designed for sensitive academic data. Please ensure:
+
+- **Never commit student data** to version control
+- **Keep databases local** - they contain personal information
+- **Use secure networks** for license verification
+- **Follow your institution's data protection policies**
+
+## License Management
+
+The system requires online license verification before use. Licenses are managed through the authentication repository and include:
+
+- Institution-specific permissions
+- User email verification
+- Feature access control
+- Automatic update notifications
+
+For license requests, contact the system administrator.
