@@ -51,3 +51,32 @@ Thumbs.db
 *.mov
 *.wmv
 
+# Student Data & Privacy (KEEP LOCAL)
+data/
+*.xlsx
+*.xls
+*.csv
+*.db
+*.sqlite
+*.sqlite3
+
+# Generated Outputs (KEEP LOCAL)
+*.pdf
+*.docx
+running_report.txt
+consolidated.xlsx
+
+# Authentication Cache
+auth_cache.json
+license_cache.json
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# OS generated files
+.DS_Store?
+ehthumbs.db
+Icon?
+
