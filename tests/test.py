@@ -503,242 +503,242 @@
 
 
 
-import sys
-import tkinter as tk
-from tkinter import filedialog
-
-def select_input_output_folders():
-    def choose_input_folder():
-        input_folder = filedialog.askdirectory()
-        input_folder_path.set(input_folder)
-
-    def choose_output_folder():
-        output_folder = filedialog.askdirectory()
-        output_folder_path.set(output_folder)
-
-    def okay_button_clicked():
-        input_path = input_folder_path.get()
-        output_path = output_folder_path.get()
-
-        if not input_path or not output_path:
-            print("Input and output folders must be specified.")
-            root.destroy()
-            sys.exit(0)  # Exit the program
-        else:
-            print("Selected Input Folder:", input_path)
-            print("Selected Output Folder:", output_path)
-            root.destroy()
-
-    def on_window_close():
-        print("The user chose to end the program.")
-        root.destroy()
-        sys.exit(0)  # Exit the program
-
-    # Create the main window
-    root = tk.Tk()
-    root.title("Folder Selection")
-
-    # Variables to store folder paths
-    input_folder_path = tk.StringVar()
-    output_folder_path = tk.StringVar()
-
-    # Input folder label and "Browse" button
-    input_label = tk.Label(root, text="Select Input Folder:")
-    input_label.grid(row=0, column=0, sticky="w", padx=(20, 0))
-    input_button = tk.Button(root, text="Browse", command=choose_input_folder)
-    input_button.grid(row=0, column=1, padx=(0, 20))
-
-    # Chosen input folder path label
-    input_path_label = tk.Label(root, textvariable=input_folder_path)
-    input_path_label.grid(row=1, column=0, columnspan=2, padx=20)
-
-    # Output folder label and "Browse" button
-    output_label = tk.Label(root, text="Select Output Folder:")
-    output_label.grid(row=2, column=0, sticky="w", padx=(20, 0))
-    output_button = tk.Button(root, text="Browse", command=choose_output_folder)
-    output_button.grid(row=2, column=1, padx=(0, 20))
-
-    # Chosen output folder path label
-    output_path_label = tk.Label(root, textvariable=output_folder_path)
-    output_path_label.grid(row=3, column=0, columnspan=2, padx=20)
-
-    # "Okay" button to validate and close the window
-    okay_button = tk.Button(root, text="Okay", command=okay_button_clicked)
-    okay_button.grid(row=4, column=0, columnspan=2, pady=(10, 0))
-
-    # Bind the window's close event to on_window_close
-    root.protocol("WM_DELETE_WINDOW", on_window_close)
-
-    root.mainloop()
-
-    # Return the selected input and output folder paths
-    return input_folder_path.get(), output_folder_path.get()
-
-# Call the function to select input and output folders
-input_path, output_path = select_input_output_folders()
-print("Input Folder Path:", input_path)
-print("Output Folder Path:", output_path)
-
-
-
-
-
-
-
-
-
-
-
-
+# import sys
 # import tkinter as tk
 # from tkinter import filedialog
-# from tkinter import messagebox
-# import openpyxl
-# import pandas as pd
-# from tkinter import ttk
 
-# class ExcelApp(tk.Tk):
-#     def __init__(self):
-#         super().__init__()
+# def select_input_output_folders():
+#     def choose_input_folder():
+#         input_folder = filedialog.askdirectory()
+#         input_folder_path.set(input_folder)
 
-#         self.title("Open EProS")
-#         self.geometry("800x600")
+#     def choose_output_folder():
+#         output_folder = filedialog.askdirectory()
+#         output_folder_path.set(output_folder)
 
-#         self.workbook = None
-#         self.sheet_names = []
-#         self.active_sheet = None
-#         self.last_opened_file_path = ""
+#     def okay_button_clicked():
+#         input_path = input_folder_path.get()
+#         output_path = output_folder_path.get()
 
-#         self.zoom_factor = 1.0  # Initial zoom factor
+#         if not input_path or not output_path:
+#             print("Input and output folders must be specified.")
+#             root.destroy()
+#             sys.exit(0)  # Exit the program
+#         else:
+#             print("Selected Input Folder:", input_path)
+#             print("Selected Output Folder:", output_path)
+#             root.destroy()
 
-#         self.create_menu()
-#         self.create_taskbar()
-#         self.create_excel_view()
+#     def on_window_close():
+#         print("The user chose to end the program.")
+#         root.destroy()
+#         sys.exit(0)  # Exit the program
 
-#     def create_menu(self):
-#         menubar = tk.Menu(self)
+#     # Create the main window
+#     root = tk.Tk()
+#     root.title("Folder Selection")
+
+#     # Variables to store folder paths
+#     input_folder_path = tk.StringVar()
+#     output_folder_path = tk.StringVar()
+
+#     # Input folder label and "Browse" button
+#     input_label = tk.Label(root, text="Select Input Folder:")
+#     input_label.grid(row=0, column=0, sticky="w", padx=(20, 0))
+#     input_button = tk.Button(root, text="Browse", command=choose_input_folder)
+#     input_button.grid(row=0, column=1, padx=(0, 20))
+
+#     # Chosen input folder path label
+#     input_path_label = tk.Label(root, textvariable=input_folder_path)
+#     input_path_label.grid(row=1, column=0, columnspan=2, padx=20)
+
+#     # Output folder label and "Browse" button
+#     output_label = tk.Label(root, text="Select Output Folder:")
+#     output_label.grid(row=2, column=0, sticky="w", padx=(20, 0))
+#     output_button = tk.Button(root, text="Browse", command=choose_output_folder)
+#     output_button.grid(row=2, column=1, padx=(0, 20))
+
+#     # Chosen output folder path label
+#     output_path_label = tk.Label(root, textvariable=output_folder_path)
+#     output_path_label.grid(row=3, column=0, columnspan=2, padx=20)
+
+#     # "Okay" button to validate and close the window
+#     okay_button = tk.Button(root, text="Okay", command=okay_button_clicked)
+#     okay_button.grid(row=4, column=0, columnspan=2, pady=(10, 0))
+
+#     # Bind the window's close event to on_window_close
+#     root.protocol("WM_DELETE_WINDOW", on_window_close)
+
+#     root.mainloop()
+
+#     # Return the selected input and output folder paths
+#     return input_folder_path.get(), output_folder_path.get()
+
+# # Call the function to select input and output folders
+# input_path, output_path = select_input_output_folders()
+# print("Input Folder Path:", input_path)
+# print("Output Folder Path:", output_path)
+
+
+
+
+
+
+
+
+
+
+
+
+import tkinter as tk
+from tkinter import filedialog
+from tkinter import messagebox
+import openpyxl
+import pandas as pd
+from tkinter import ttk
+
+class ExcelApp(tk.Tk):
+    def __init__(self):
+        super().__init__()
+
+        self.title("Open EProS")
+        self.geometry("800x600")
+
+        self.workbook = None
+        self.sheet_names = []
+        self.active_sheet = None
+        self.last_opened_file_path = ""
+
+        self.zoom_factor = 1.0  # Initial zoom factor
+
+        self.create_menu()
+        self.create_taskbar()
+        self.create_excel_view()
+
+    def create_menu(self):
+        menubar = tk.Menu(self)
         
-#         # File menu
-#         file_menu = tk.Menu(menubar, tearoff=0)
-#         file_menu.add_command(label="Open", command=self.open_excel)
-#         file_menu.add_command(label="Save", command=self.save_excel)
-#         file_menu.add_separator()
-#         file_menu.add_command(label="Exit", command=self.quit_program)
-#         menubar.add_cascade(label="File", menu=file_menu)
+        # File menu
+        file_menu = tk.Menu(menubar, tearoff=0)
+        file_menu.add_command(label="Open", command=self.open_excel)
+        file_menu.add_command(label="Save", command=self.save_excel)
+        file_menu.add_separator()
+        file_menu.add_command(label="Exit", command=self.quit_program)
+        menubar.add_cascade(label="File", menu=file_menu)
         
-#         # View menu
-#         view_menu = tk.Menu(menubar, tearoff=0)
-#         view_menu.add_command(label="Display Excel Sheet", command=self.display_excel_sheet)
-#         view_menu.add_command(label="Zoom In", command=self.zoom_in)
-#         view_menu.add_command(label="Zoom Out", command=self.zoom_out)
-#         menubar.add_cascade(label="View", menu=view_menu)
+        # View menu
+        view_menu = tk.Menu(menubar, tearoff=0)
+        view_menu.add_command(label="Display Excel Sheet", command=self.display_excel_sheet)
+        view_menu.add_command(label="Zoom In", command=self.zoom_in)
+        view_menu.add_command(label="Zoom Out", command=self.zoom_out)
+        menubar.add_cascade(label="View", menu=view_menu)
         
-#         # About menu
-#         about_menu = tk.Menu(menubar, tearoff=0)
-#         about_menu.add_command(label="How to Use", command=self.show_how_to_use)
-#         about_menu.add_command(label="Version and Licenses", command=self.show_version_and_licenses)
-#         menubar.add_cascade(label="About", menu=about_menu)
+        # About menu
+        about_menu = tk.Menu(menubar, tearoff=0)
+        about_menu.add_command(label="How to Use", command=self.show_how_to_use)
+        about_menu.add_command(label="Version and Licenses", command=self.show_version_and_licenses)
+        menubar.add_cascade(label="About", menu=about_menu)
         
-#         self.config(menu=menubar)
+        self.config(menu=menubar)
 
-#     def create_taskbar(self):
-#         taskbar = tk.Frame(self)
-#         taskbar.pack(side=tk.TOP, fill=tk.X)
+    def create_taskbar(self):
+        taskbar = tk.Frame(self)
+        taskbar.pack(side=tk.TOP, fill=tk.X)
 
-#     def create_excel_view(self):
-#         self.canvas = tk.Canvas(self)
-#         self.canvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
-#         self.scrollbar_x = tk.Scrollbar(self, orient="horizontal", command=self.canvas.xview)
-#         self.scrollbar_x.pack(side="bottom", fill="x")
-#         self.canvas.configure(xscrollcommand=self.scrollbar_x.set)
+    def create_excel_view(self):
+        self.canvas = tk.Canvas(self)
+        self.canvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+        self.scrollbar_x = tk.Scrollbar(self, orient="horizontal", command=self.canvas.xview)
+        self.scrollbar_x.pack(side="bottom", fill="x")
+        self.canvas.configure(xscrollcommand=self.scrollbar_x.set)
 
-#         self.scrollbar_y = tk.Scrollbar(self, orient="vertical", command=self.canvas.yview)
-#         self.scrollbar_y.pack(side="right", fill="y")
-#         self.canvas.configure(yscrollcommand=self.scrollbar_y.set)
+        self.scrollbar_y = tk.Scrollbar(self, orient="vertical", command=self.canvas.yview)
+        self.scrollbar_y.pack(side="right", fill="y")
+        self.canvas.configure(yscrollcommand=self.scrollbar_y.set)
 
-#         self.frame = tk.Frame(self.canvas)
-#         self.canvas.create_window((0, 0), window=self.frame, anchor="nw")
-#         self.frame.bind("<Configure>", self.on_frame_configure)
+        self.frame = tk.Frame(self.canvas)
+        self.canvas.create_window((0, 0), window=self.frame, anchor="nw")
+        self.frame.bind("<Configure>", self.on_frame_configure)
 
-#     def on_frame_configure(self, event):
-#         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+    def on_frame_configure(self, event):
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
-#     def open_excel(self):
-#         file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx")])
-#         if file_path:
-#             self.last_opened_file_path = file_path
-#             self.workbook = openpyxl.load_workbook(file_path)
-#             self.sheet_names = self.workbook.sheetnames
-#             self.active_sheet = None
-#             self.update_excel_view()
+    def open_excel(self):
+        file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx")])
+        if file_path:
+            self.last_opened_file_path = file_path
+            self.workbook = openpyxl.load_workbook(file_path)
+            self.sheet_names = self.workbook.sheetnames
+            self.active_sheet = None
+            self.update_excel_view()
 
-#     def save_excel(self):
-#         if self.workbook:
-#             save_path = filedialog.asksaveasfilename(filetypes=[("Excel files", "*.xlsx")])
-#             if save_path:
-#                 self.workbook.save(save_path)
-#                 messagebox.showinfo("Info", "File saved successfully!")
+    def save_excel(self):
+        if self.workbook:
+            save_path = filedialog.asksaveasfilename(filetypes=[("Excel files", "*.xlsx")])
+            if save_path:
+                self.workbook.save(save_path)
+                messagebox.showinfo("Info", "File saved successfully!")
 
-#     def display_excel_sheet(self):
-#         if self.workbook:
-#             sheet_name = self.sheet_names[0]  # Change this to the desired sheet name
-#             self.select_sheet(sheet_name)
+    def display_excel_sheet(self):
+        if self.workbook:
+            sheet_name = self.sheet_names[0]  # Change this to the desired sheet name
+            self.select_sheet(sheet_name)
 
-#     def update_excel_view(self):
-#         for widget in self.frame.winfo_children():
-#             widget.destroy()
+    def update_excel_view(self):
+        for widget in self.frame.winfo_children():
+            widget.destroy()
 
-#         if self.active_sheet:
-#             # Read data into a pandas DataFrame for better formatting
-#             df = pd.DataFrame(self.active_sheet.values)
+        if self.active_sheet:
+            # Read data into a pandas DataFrame for better formatting
+            df = pd.DataFrame(self.active_sheet.values)
             
-#             # Create a ttk Treeview widget to display the DataFrame
-#             tree = ttk.Treeview(self.frame, columns=list(df.columns), show="headings", height=len(df) + 1)
+            # Create a ttk Treeview widget to display the DataFrame
+            tree = ttk.Treeview(self.frame, columns=list(df.columns), show="headings", height=len(df) + 1)
             
-#             # Add columns to the Treeview
-#             for col in df.columns:
-#                 tree.heading(col, text=col)
+            # Add columns to the Treeview
+            for col in df.columns:
+                tree.heading(col, text=col)
             
-#             # Set cell sizes based on zoom factor
-#             cell_width = int(80 * self.zoom_factor)
-#             cell_height = int(25 * self.zoom_factor)
-#             tree.column("#1", width=cell_width, stretch=tk.NO)
-#             for col in df.columns:
-#                 tree.column(col, width=cell_width, stretch=tk.NO)
-#                 tree.heading(col, text=col, anchor=tk.W)
+            # Set cell sizes based on zoom factor
+            cell_width = int(80 * self.zoom_factor)
+            cell_height = int(25 * self.zoom_factor)
+            tree.column("#1", width=cell_width, stretch=tk.NO)
+            for col in df.columns:
+                tree.column(col, width=cell_width, stretch=tk.NO)
+                tree.heading(col, text=col, anchor=tk.W)
             
-#             # Insert data into the Treeview
-#             for i, row in df.iterrows():
-#                 tree.insert("", "end", values=list(row))
+            # Insert data into the Treeview
+            for i, row in df.iterrows():
+                tree.insert("", "end", values=list(row))
             
-#             tree.grid(row=0, column=0, sticky="nsew")
-#             self.frame.grid_rowconfigure(0, weight=1)
-#             self.frame.grid_columnconfigure(0, weight=1)
+            tree.grid(row=0, column=0, sticky="nsew")
+            self.frame.grid_rowconfigure(0, weight=1)
+            self.frame.grid_columnconfigure(0, weight=1)
 
-#     def select_sheet(self, sheet_name):
-#         if self.workbook:
-#             self.active_sheet = self.workbook[sheet_name]
-#             self.update_excel_view()
+    def select_sheet(self, sheet_name):
+        if self.workbook:
+            self.active_sheet = self.workbook[sheet_name]
+            self.update_excel_view()
 
-#     def show_how_to_use(self):
-#         # Code to display information on how to use the program
-#         pass
+    def show_how_to_use(self):
+        # Code to display information on how to use the program
+        pass
 
-#     def show_version_and_licenses(self):
-#         # Code to display version and license information
-#         pass
+    def show_version_and_licenses(self):
+        # Code to display version and license information
+        pass
 
-#     def quit_program(self):
-#         self.destroy()
+    def quit_program(self):
+        self.destroy()
 
-#     def zoom_in(self):
-#         self.zoom_factor *= 1.2  # Increase zoom factor by 20%
-#         self.update_excel_view()
+    def zoom_in(self):
+        self.zoom_factor *= 1.2  # Increase zoom factor by 20%
+        self.update_excel_view()
 
-#     def zoom_out(self):
-#         self.zoom_factor /= 1.2  # Decrease zoom factor by 20%
-#         self.update_excel_view()
+    def zoom_out(self):
+        self.zoom_factor /= 1.2  # Decrease zoom factor by 20%
+        self.update_excel_view()
 
-# if __name__ == "__main__":
-#     app = ExcelApp()
-#     app.mainloop()
+if __name__ == "__main__":
+    app = ExcelApp()
+    app.mainloop()

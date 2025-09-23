@@ -364,49 +364,32 @@ pygame.mixer.pre_init(44100, -16, 2, 2048)  # You can adjust these parameters as
 pygame.mixer.init()
 pygame.init()
 
-# Function to close the window after a delay
-def close_window_after_delay(window):
-    window.after(5000, window.destroy)  # Close the window after 5 seconds (5000 milliseconds)
+# Function to play a sound
+def play_sound(sound_path):
+    if os.path.exists(sound_path):
+        pygame.mixer.music.load(sound_path)
+        pygame.mixer.music.play()
+        pygame.time.delay(3000)  # Delay for 3 seconds (3000) to allow sound to play
+
+
 
 # Function to show the completion message and perform actions
 def show_completion_message():
     # Create a tkinter window
     root = tk.Tk()
-    root.title("Task Completion")
-    root.geometry("400x100")  # Set the initial window size here (width x height)
+    root.withdraw()
 
-    # Specify a font that includes a better-looking checkmark symbol
-    custom_font = font.Font(family="DejaVu Sans", size=12)
-    # custom_font = font.Font(family="Times New Roman", size=12)
-
-    # Create a list of messages with real tick symbols (checkmarks)
-    messages = [
-        "\u2713 Task Completed!",  # This checkmark is from the DejaVu Sans font
-        "\u2713 Check the output folder."
-    ]
-
-    # Display the messages as labels with the custom font
-    for message in messages:
-        label = tk.Label(root, text=message, font=custom_font)
-        label.pack(anchor='w', padx=20)
+    # Display the success message with a built-in icon
+    tk.messagebox.showinfo("Task Completed", "Task Completed!\nCheck the output folder.")
 
     # Specify the absolute path to the sound file
     sound_file = os.path.abspath("data/inputs/sounds/mixkit_co_arrow_whoosh_1491.wav")
-    if os.path.exists(sound_file):
-        pygame.mixer.music.load(sound_file)
-        pygame.mixer.music.play()
-
-    # Close the window after a delay
-    close_window_after_delay(root)
+    play_sound(sound_file)
 
     # Start the tkinter main loop
-    root.mainloop()
+    root.destroy()
 
-# Call the function to show the completion message
-# show_completion_message()
 
-# Quit pygame to prevent the black window from appearing
-# pygame.quit()
 
 
 init_path_messages = []
@@ -429,6 +412,17 @@ def select_input_output_folders():
             # log_print("Exit: Input and output folders must be specified.")
             init_path_messages.append("Exit: Input and output folders must be specified.")
             root.destroy()
+
+            warning_window = tk.Tk()
+            warning_window.withdraw()  # Hide the warning window
+            tk.messagebox.showwarning("Warning", "Input and output folders must be specified.")
+
+            # Play a warning sound
+            # Specify the absolute path to the sound file
+            sound_file = os.path.abspath("data/inputs/sounds/mixkit_co_martial_arts_fast_punch_2047.wav")
+            play_sound(sound_file)
+
+
             sys.exit(0)  # Exit the program
         else:
             # log_print(f"Selected Input Folder: {input_path}")
@@ -441,6 +435,14 @@ def select_input_output_folders():
         # log_print("The user chose to end the program.")
         init_path_messages.append("The user chose to end the program.")
         root.destroy()
+        warning_window = tk.Tk()
+        warning_window.withdraw()  # Hide the warning window
+        tk.messagebox.showwarning("Warning", "The user chose to end the program.")
+
+        # Play a warning sound
+        # Specify the absolute path to the sound file
+        sound_file = os.path.abspath("data/inputs/sounds/mixkit_co_martial_arts_fast_punch_2047.wav")
+        play_sound(sound_file)
         sys.exit(0)  # Exit the program
 
     # Create the main window

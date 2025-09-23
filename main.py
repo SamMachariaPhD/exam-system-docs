@@ -1,15 +1,48 @@
 import os
+import sys
 import toml
+import tkinter as tk
 from modules.file_processing import *
 from modules.data_consolidation import *
 from modules.utilities import *
+from modules.auth.login_dialog import LoginDialog
 
+
+def authenticate_user():
+    """Authenticate user before allowing system access."""
+    root = tk.Tk()
+    root.withdraw()  # Hide main window during login
+
+    login_dialog = LoginDialog()
+
+    if login_dialog.show_login():
+        user_info = login_dialog.get_user_info()
+        log_print(f"User authenticated: {user_info['email']}")
+        root.destroy()
+        return True, user_info
+    else:
+        log_print("Authentication failed or cancelled.")
+        root.destroy()
+        return False, None
 
 
 if __name__ == "__main__":
+    print("=" * 50)
+    print("Open EProS - Exam Processing System")
+    print("=" * 50)
+
+    # Authenticate user first
+    authenticated, user_info = authenticate_user()
+
+    if not authenticated:
+        print("Authentication required. Exiting...")
+        sys.exit(1)
+
+    print(f"Welcome, {user_info['email']}!")
+    print("-" * 50)
 
     config_path = "config.toml"  # Specify the path to your TOML configuration file
-    
+
     running_report_path = None  # Initialize the global variable
     # Load paths from configuration
     config = toml.load(config_path)

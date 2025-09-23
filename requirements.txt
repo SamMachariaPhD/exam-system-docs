@@ -9,7 +9,7 @@ PyPDF2==3.0.1
 pygame>=2.0.0,<3.0.0
 
 
-# requests==2.26.0
+requests==2.26.0
 
 # for GUI 
 # tk==8.6.10
