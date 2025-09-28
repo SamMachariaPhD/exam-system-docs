@@ -1,0 +1,6 @@
+[submodule "docs"]
+	path = docs
+	url = https://github.com/SamMachariaPhD/exam-system-docs.git
+[submodule "releases"]
+	path = releases
+	url = https://github.com/SamMachariaPhD/exam-system-releases.git
