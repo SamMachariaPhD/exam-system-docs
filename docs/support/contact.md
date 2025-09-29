@@ -5,7 +5,7 @@ Get help with DEEPS installation, configuration, and usage.
 ## :material-email: Primary Support
 
 **Email Support**
-📧 **deeps-support@dkut.ac.ke**
+📧 **samuel.macharia@dkut.ac.ke**
 
 Our support team responds to technical questions, installation issues, and feature requests.
 
@@ -16,11 +16,11 @@ Our support team responds to technical questions, installation issues, and featu
 
 ## :material-school: Development Team
 
-**Dedan Kimathi University of Technology**
-Department of Mechatronics Engineering
-Nyeri, Kenya
+**Personal Research Project**
+Samuel Macharia
+Kenya
 
-DEEPS is developed and maintained by the academic staff at DeKUT, ensuring it meets real-world educational needs.
+DEEPS is a personal research initiative exploring simplified academic data processing. This is not an institutional project.
 
 ## :material-bug: Report Issues
 

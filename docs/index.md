@@ -8,7 +8,13 @@
 
 ## :material-school: About DEEPS
 
-DEEPS (Departmental Exam Processing System) is a comprehensive desktop application designed to streamline academic data management for university departments and educational institutions. Built with privacy and security at its core, DEEPS processes all data locally while providing powerful tools for exam processing, student record management, and institutional reporting.
+DEEPS (Departmental Exam Processing System) is an experimental desktop application exploring simplified academic data management approaches. This is a personal research project investigating whether exam processing can be made simpler and more decentralized.
+
+!!! warning "Important: Experimental System"
+    - **Testing Phase Only**: Currently tested with dummy data, not real student records
+    - **User Responsibility**: You are fully responsible for your data security and handling
+    - **No Data Collection**: DEEPS processes everything locally - no data is recorded or transmitted
+    - **Personal Research**: This is not an approved institutional system
 
 ## :material-rocket: Key Features
 
@@ -138,17 +144,17 @@ Ready to get started? Follow these simple steps:
 
 ## :material-trophy: Why Choose DEEPS?
 
-!!! success "Proven Track Record"
+!!! success "Experimental Development"
 
-    DEEPS has been successfully deployed at **Dedan Kimathi University of Technology**, processing thousands of student records and generating official documents for university senate meetings.
+    DEEPS is currently in development and testing phase using dummy data only. This is a personal research project to explore simplified academic data processing approaches.
 
 !!! info "Free for Educational Use"
 
     DEEPS is provided **free of charge** to educational institutions worldwide. Our mission is to improve academic data management while ensuring student privacy.
 
-!!! note "Professional Support"
+!!! warning "Important Notice"
 
-    Get expert assistance from the development team at Dedan Kimathi University of Technology. We understand academic workflows and data requirements.
+    This is an experimental system for research purposes. Users are responsible for their own data handling and security. DEEPS processes data locally only - no data is recorded or transmitted externally.
 
 ---
 
@@ -179,4 +185,4 @@ Transform your academic data management with DEEPS. Download now and experience 
 
 ---
 
-*DEEPS is developed and maintained by the Department of Mechatronics Engineering at Dedan Kimathi University of Technology, Kenya.*
+*DEEPS is a personal research project by Samuel Macharia exploring decentralized academic data processing solutions.*

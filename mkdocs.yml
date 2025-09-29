@@ -1,6 +1,6 @@
 site_name: DEEPS - Departmental Exam Processing System
 site_description: Professional academic data management for educational institutions
-site_author: Dedan Kimathi University of Technology
+site_author: Samuel Macharia
 site_url: https://SamMachariaPhD.github.io/exam-system-docs/
 
 repo_name: SamMachariaPhD/exam-system-docs
@@ -91,7 +91,7 @@ extra:
     - icon: fontawesome/solid/globe
       link: https://www.dkut.ac.ke
     - icon: fontawesome/solid/envelope
-      link: mailto:deeps-support@dkut.ac.ke
+      link: mailto:samuel.macharia@dkut.ac.ke
   generator: false
 
-copyright: Copyright &copy; 2024 Dedan Kimathi University of Technology
+copyright: Copyright &copy; 2024 Samuel Macharia - Personal Academic Research Project

@@ -8,7 +8,7 @@ Common questions about DEEPS and their answers.
 **A:** Windows 10/macOS 10.15/Ubuntu 18.04+, 4GB RAM, 2GB disk space. See [System Requirements](../getting-started/requirements.md) for details.
 
 ### **Q: Is DEEPS really free for educational institutions?**
-**A:** Yes, DEEPS is provided free of charge to educational institutions worldwide for academic data management.
+**A:** Yes, DEEPS is provided free for testing and evaluation. This is an experimental system - users are responsible for their own data security and handling.
 
 ### **Q: Does DEEPS work offline?**
 **A:** Yes, after initial setup and license verification, DEEPS works completely offline. No internet required for daily operations.
@@ -88,7 +88,7 @@ Common questions about DEEPS and their answers.
 **A:** This documentation provides comprehensive guides. Additional training can be arranged through deeps-support@dkut.ac.ke.
 
 ### **Q: What if I need a feature that's not available?**
-**A:** Contact our support team to discuss feature requests. Many enhancements come from user suggestions.
+**A:** Contact samuel.macharia@dkut.ac.ke to discuss feature requests. This is a research project exploring academic data processing improvements.
 
 ## :material-license: Licensing and Distribution
 
@@ -103,4 +103,4 @@ Common questions about DEEPS and their answers.
 
 ---
 
-**Still have questions?** Contact us at [deeps-support@dkut.ac.ke](mailto:deeps-support@dkut.ac.ke) or check our [Contact page](contact.md).
+**Still have questions?** Contact us at [samuel.macharia@dkut.ac.ke](mailto:samuel.macharia@dkut.ac.ke) or check our [Contact page](contact.md).

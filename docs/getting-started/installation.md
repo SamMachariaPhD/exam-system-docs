@@ -1,6 +1,9 @@
 # Installation Guide
 
-Get DEEPS up and running on your system in minutes with our comprehensive installation guide.
+Get DEEPS up and running on your system for testing and evaluation.
+
+!!! warning "Experimental System Notice"
+    DEEPS is currently in development/testing phase. Use only with dummy data. You are responsible for your own data security and handling. This is a personal research project exploring academic data processing approaches.
 
 ## :material-download: Download DEEPS
 
@@ -232,7 +235,7 @@ Configure user permissions:
 **License Verification Fails:**
 - Check internet connectivity
 - Verify institutional firewall settings
-- Contact support for offline license activation
+- Contact samuel.macharia@dkut.ac.ke for assistance
 
 ### Getting Help
 
@@ -240,7 +243,7 @@ If you encounter installation issues:
 
 1. **Check** the [Troubleshooting Guide](../support/troubleshooting.md)
 2. **Review** [Frequently Asked Questions](../support/faq.md)
-3. **Contact** technical support: deeps-support@dkut.ac.ke
+3. **Contact** samuel.macharia@dkut.ac.ke for assistance
 
 ---
 

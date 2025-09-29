@@ -99,7 +99,7 @@ Common issues and solutions for DEEPS users.
 
 ### Contact Information
 
-**Email Support:** deeps-support@dkut.ac.ke
+**Email Support:** samuel.macharia@dkut.ac.ke
 
 **Include in your message:**
 - DEEPS version number
