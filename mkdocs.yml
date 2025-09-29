@@ -1,16 +1,97 @@
-site_name: DEEPS Documentation
+site_name: DEEPS - Departmental Exam Processing System
+site_description: Professional academic data management for educational institutions
+site_author: Dedan Kimathi University of Technology
 site_url: https://SamMachariaPhD.github.io/exam-system-docs/
+
+repo_name: SamMachariaPhD/exam-system-docs
+repo_url: https://github.com/SamMachariaPhD/exam-system-docs
 
 theme:
   name: material
   palette:
+    # Light mode
     - scheme: default
       primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
   features:
+    - navigation.tabs
     - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - search.highlight
+    - search.share
+    - search.suggest
+    - content.code.copy
+    - content.tabs.link
+    - toc.follow
+  font:
+    text: Roboto
+    code: Roboto Mono
+  icon:
+    logo: material/school
+    repo: fontawesome/brands/github
 
 nav:
   - Home: index.md
+  - Getting Started:
+    - Installation: getting-started/installation.md
+    - System Requirements: getting-started/requirements.md
+    - First Setup: getting-started/setup.md
+  - User Guide:
+    - Overview: user-guide/overview.md
+    - Student Data Management: user-guide/student-data.md
+    - Processing Exams: user-guide/processing.md
+    - Generating Reports: user-guide/reports.md
+    - Data Security: user-guide/security.md
+  - Features:
+    - Core Capabilities: features/capabilities.md
+    - Academic Workflow: features/workflow.md
+    - Report Types: features/reports.md
+  - Support:
+    - Troubleshooting: support/troubleshooting.md
+    - FAQ: support/faq.md
+    - Contact: support/contact.md
 
 plugins:
   - search
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+  - def_list
+  - toc:
+      permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/SamMachariaPhD
+    - icon: fontawesome/solid/globe
+      link: https://www.dkut.ac.ke
+    - icon: fontawesome/solid/envelope
+      link: mailto:deeps-support@dkut.ac.ke
+  generator: false
+
+copyright: Copyright &copy; 2024 Dedan Kimathi University of Technology
